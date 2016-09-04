@@ -31,20 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String AUTHOR_NAME = "author";
         public static final String BOOK_ID = "bookId";
 
-//        //CREATE USERS_BOOKS_TABLE
-//        private static final String USERS_BOOKS_TABLE_CREATE =
-//                "CREATE TABLE " + USERS_BOOKS_TABLE + " (" +
-//                        USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                        USER_NAME + " TEXT, " + USER_BOOK_NAME + " TEXT, " +
-//                        USER_AUTHOR_NAME + " TEXT)";
-//
-//
-//        //CREATE BOOKS_TABLE
-//        private static final String BOOKS_TABLE_CREATE =
-//                "CREATE TABLE " + BOOKS_TABLE + " (" +
-//                        BOOK_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-//                        AUTHOR_NAME + " TEXT, ";
-//
+
 
         public DatabaseHelper(Context context) {
                 super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -76,9 +63,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         public Cursor getAllDataFromBooksTable(){
                 SQLiteDatabase db = this.getWritableDatabase();
-                Cursor res = db.rawQuery("select * from" + BOOKS_TABLE, null);
+                String s = "select * from " + BOOKS_TABLE;
+
+                Cursor res = db.rawQuery("select * from " + BOOKS_TABLE, null);
                 return res;
         }
 
 }
-//hhh
