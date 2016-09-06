@@ -32,6 +32,7 @@ public class MainActivity extends Activity {
     Button updatebtn;
     EditText idBook;
     Button btnDelete;
+    Button bookQuery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +47,13 @@ public class MainActivity extends Activity {
         updatebtn = (Button) findViewById(R.id.updatebtn);
         idBook = (EditText) findViewById(R.id.ideditText);
         btnDelete = (Button) findViewById(R.id.btnDelete);
+        bookQuery = (Button) findViewById(R.id.bookbyidbutton);
 
         AddData();
         viewAll();
         UpdateData();
         DeleteData();
+        ViewById();
     }
 
     public void AddData() {
@@ -73,6 +76,40 @@ public class MainActivity extends Activity {
 
     }
 
+    public void ViewById() {
+        bookQuery.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        BookModel book = mydb.getBookByID(idBook.getText().toString());
+
+                        Toast.makeText(MainActivity.this,"Book Id: " + book.getBookid() ,Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Book name: " + book.getBookName() ,Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Book author: " + book.getAuthor() ,Toast.LENGTH_LONG).show();
+//                        if (book == null) {
+//                            // show message
+//                            showMessage("Error", "Nothing found");
+//                            return;
+//                        }
+//
+//                        StringBuffer buffer = new StringBuffer();
+//                        buffer.append("bookId :" + book.getBookid().toString() + "\n");
+//                        buffer.append("bookName :" + book.getBookName().toString() + "\n");
+//                        buffer.append("author :" + book.getAuthor().toString() + "\n");
+//
+//
+//                        // Show all data
+//                        showMessage("Data", buffer.toString());
+
+                    }
+                }
+
+
+        );
+    }
+
+
     public void viewAll() {
         btnviewAll.setOnClickListener(
                 new View.OnClickListener() {
@@ -86,15 +123,15 @@ public class MainActivity extends Activity {
                             return;
                         }
 
-                        StringBuffer buffer = new StringBuffer();
+                        StringBuffer buffer1 = new StringBuffer();
                         while (res.moveToNext()) {
-                            buffer.append("bookId :" + res.getString(0) + "\n");
-                            buffer.append("bookName :" + res.getString(1) + "\n");
-                            buffer.append("author :" + res.getString(2) + "\n");
+                            buffer1.append("bookId :" + res.getString(0) + "\n");
+                            buffer1.append("bookName :" + res.getString(1) + "\n");
+                            buffer1.append("author :" + res.getString(2) + "\n");
                         }
 
                         // Show all data
-                        showMessage("Data", buffer.toString());
+                        showMessage("Data", buffer1.toString());
                     }
                 }
         );
@@ -108,6 +145,7 @@ public class MainActivity extends Activity {
         builder.show();
     }
 
+
     public void UpdateData() {
         updatebtn.setOnClickListener(
                 new View.OnClickListener() {
@@ -118,9 +156,9 @@ public class MainActivity extends Activity {
                         book.setAuthor(Author.getText().toString());
                         boolean isUpdate = mydb.updateBookTable(idBook.getText().toString(),book);
                         if (isUpdate == true)
-                            Toast.makeText(MainActivity.this,"Data Uptade",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Data Update",Toast.LENGTH_LONG).show();
                         else
-                            Toast.makeText(MainActivity.this,"Data not Uptade",Toast.LENGTH_LONG).show();
+                            Toast.makeText(MainActivity.this,"Data not Update",Toast.LENGTH_LONG).show();
                     }
                 }
 

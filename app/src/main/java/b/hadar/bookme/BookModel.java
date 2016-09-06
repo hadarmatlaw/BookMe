@@ -7,6 +7,15 @@ public class BookModel {
 
         private String bookName;
         private String author;
+        private String id;
+
+        public String getBookid(){
+        return id;
+    }
+
+        public void setBookid(String bookName){
+        this.id = id;
+    }
 
         public String getBookName(){
             return bookName;

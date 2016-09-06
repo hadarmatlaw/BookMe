@@ -69,6 +69,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return res;
         }
 
+
+        public BookModel getBookByID(String Id){
+                SQLiteDatabase db = this.getReadableDatabase();
+                BookModel book = new BookModel();
+
+                Cursor cursor = db.rawQuery( "select * from books where bookId="+ Id + "", null );
+
+                if (cursor.moveToFirst()) {
+                        do {
+                                book.setBookid(cursor.getString(cursor.getColumnIndex("bookId")));
+                                book.setBookName(cursor.getString(cursor.getColumnIndex("bookName")));
+                                book.setAuthor(cursor.getString(cursor.getColumnIndex("author")));;
+
+
+                        } while (cursor.moveToNext());
+                }
+
+                return book;
+        }
+
+
+
         public Boolean updateBookTable (String id, BookModel book){
                 SQLiteDatabase db = this.getWritableDatabase();
                 ContentValues contentValues = new ContentValues();
