@@ -26,7 +26,9 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/addbtn"
-        android:layout_alignTop="@+id/editAuthor"/>
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/authorName"
+        android:layout_alignStart="@+id/authorName" />
         <!--android:layout_alignParentEnd="true"-->
         <!--android:layout_marginEnd="39dp" />-->
 
@@ -36,24 +38,28 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="authorName"
         android:id="@+id/authorName"
-        android:layout_below="@+id/bookName"/>
+        android:layout_below="@+id/bookName"
+        android:layout_toLeftOf="@+id/editAuthor"
+        android:layout_toStartOf="@+id/editAuthor" />
         <!--android:layout_alignStart="@+id/bookName" />-->
 
     <EditText
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:id="@+id/editAuthor"
-        android:layout_below="@+id/editBookName"/>
+        android:layout_below="@+id/editBookName"
+        android:layout_centerHorizontal="true" />
         <!--android:layout_toEndOf="@+id/authorName" />-->
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All Data"
-        android:id="@+id/alldatabtn"
-        android:layout_below="@+id/authorName"
-        android:layout_marginTop="43dp" />
+        android:text="Update"
+        android:id="@+id/updatebtn"
+        android:layout_below="@+id/addbtn"
+        android:layout_alignLeft="@+id/bookName"
+        android:layout_alignStart="@+id/bookName" />
         <!--android:layout_alignStart="@+id/authorName"-->
 
 
@@ -63,10 +69,40 @@
         android:layout_height="wrap_content"
         android:text="View All"
         android:id="@+id/viewall"
-        android:layout_alignTop="@+id/alldatabtn"
-        android:layout_alignRight="@+id/editBookName"
-        android:layout_alignEnd="@+id/editBookName" />
-        <!--android:layout_toStartOf="@+id/addbtn" />-->
+        android:layout_alignBaseline="@+id/updatebtn"
+        android:layout_alignBottom="@+id/updatebtn"
+        android:layout_toRightOf="@+id/updatebtn"
+        android:layout_toEndOf="@+id/updatebtn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="ID"
+        android:id="@+id/idtextView"
+        android:layout_below="@+id/editAuthor"
+        android:layout_toLeftOf="@+id/viewall"
+        android:layout_alignLeft="@+id/bookName"
+        android:layout_alignStart="@+id/bookName" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/ideditText"
+        android:text="id"
+        android:layout_below="@+id/editAuthor"
+        android:layout_toRightOf="@+id/authorName"
+        android:layout_toEndOf="@+id/authorName" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/btnDelete"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+    <!--android:layout_toStartOf="@+id/addbtn" />-->
 
 
 </RelativeLayout>

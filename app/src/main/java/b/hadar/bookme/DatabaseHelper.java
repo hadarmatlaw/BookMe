@@ -69,4 +69,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return res;
         }
 
+        public Boolean updateBookTable (String id, BookModel book){
+                SQLiteDatabase db = this.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(BOOK_ID,id);
+                contentValues.put(BOOK_NAME, book.getBookName());
+                contentValues.put(AUTHOR_NAME, book.getAuthor());
+                db.update("books ", contentValues, "bookId = ? ", new String[]{ id });
+                return true;
+        }
+
+        public Integer deleteDataFromBooksTable (String id) {
+                SQLiteDatabase db = this.getWritableDatabase();
+                return db.delete("books ", "bookId = ? ", new String[] {id});
+
+        }
+
 }

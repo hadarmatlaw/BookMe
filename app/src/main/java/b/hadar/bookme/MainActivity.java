@@ -24,11 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 public class MainActivity extends Activity {
 
-//ofri change
+
     DatabaseHelper mydb;
     EditText bookName, Author;
     Button addDatabtn;
     Button btnviewAll;
+    Button updatebtn;
+    EditText idBook;
+    Button btnDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +43,14 @@ public class MainActivity extends Activity {
         Author = (EditText) findViewById(R.id.editAuthor);
         addDatabtn = (Button) findViewById(R.id.addbtn);
         btnviewAll = (Button) findViewById(R.id.viewall);
+        updatebtn = (Button) findViewById(R.id.updatebtn);
+        idBook = (EditText) findViewById(R.id.ideditText);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+
         AddData();
         viewAll();
+        UpdateData();
+        DeleteData();
     }
 
     public void AddData() {
@@ -98,6 +107,42 @@ public class MainActivity extends Activity {
         builder.setMessage(Message);
         builder.show();
     }
+
+    public void UpdateData() {
+        updatebtn.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        BookModel book = new BookModel();
+                        book.setBookName(bookName.getText().toString());
+                        book.setAuthor(Author.getText().toString());
+                        boolean isUpdate = mydb.updateBookTable(idBook.getText().toString(),book);
+                        if (isUpdate == true)
+                            Toast.makeText(MainActivity.this,"Data Uptade",Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(MainActivity.this,"Data not Uptade",Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+        );
+    }
+
+    public void DeleteData() {
+        btnDelete.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Integer deletedRows = mydb.deleteDataFromBooksTable(idBook.getText().toString());
+                        if(deletedRows > 0)
+                            Toast.makeText(MainActivity.this,"Data Deleted",Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(MainActivity.this,"Data not Deleted",Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
+    }
+
 }
 
 
