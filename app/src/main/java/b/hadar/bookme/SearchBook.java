@@ -1,5 +1,6 @@
 package b.hadar.bookme;
 
+import android.app.Activity;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
 /**
  * Created by User on 05/09/2016.
  */
-public class SearchBook extends ListActivity {
+public class SearchBook extends Activity {
 
     DatabaseHelper mydb;
     EditText bookNameSearch;
@@ -33,7 +35,7 @@ public class SearchBook extends ListActivity {
         mydb = new DatabaseHelper(this);
 
         bookNameSearch = (EditText) findViewById(R.id.booksearcheditText);
-        bookSearchList = (ListView) findViewById(R.id.booksearchresultlistView);
+        bookSearchList = (ListView) findViewById(R.id.booksearchresultlist);
         searchbtn = (Button) findViewById(R.id.searchbtn);
         addtolibrarybtn = (Button) findViewById(R.id.addToLibrarybtn);
         finishbtn = (Button) findViewById(R.id.finishbtn);
@@ -47,29 +49,21 @@ public class SearchBook extends ListActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        Cursor res = mydb.getAllDataFromBooksTable();
-
-                        if (res.getCount() == 0) {
-                            // show message
-                            showMessage("Error", "Nothing found");
-                            return;
-                        }
-
-                        String sbook = bookNameSearch.getText().toString();
-                        String booktablename;
-                        String searchedBookId;
-                        ArrayList<String> searchedBooks = new ArrayList<String>();
-
-                        while (res.moveToNext()) {
-                            booktablename = res.getString(1);
-
-                            if (booktablename == sbook) {
-                                searchedBookId = res.getString(0);
-                                searchedBooks.add(searchedBookId);
-                            }
-
-                        }
+                        SearchBookResult();
+                        //String sbook = bookNameSearch.getText().toString();
+//                        String booktablename;
+//                        String searchedBookId;
+//                        ArrayList<String> searchedBooks = new ArrayList<String>();
+//
+//                        while (res.moveToNext()) {
+//                            booktablename = res.getString(1);
+//
+//                            if (booktablename == sbook) {
+//                                searchedBookId = res.getString(0);
+//                                searchedBooks.add(searchedBookId);
+//                            }
+//
+//                        }
 
 
 
@@ -82,12 +76,22 @@ public class SearchBook extends ListActivity {
 
     }
 
-    public void showMessage(String title, String Message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
+    private void SearchBookResult(){
+        Cursor cursor = mydb.getRowByName(bookNameSearch.getText().toString() );
+        String[] fromFieldNames = new String [] {DatabaseHelper.BOOKID,DatabaseHelper.BOOK_NAME,DatabaseHelper.AUTHOR_NAME};
+        int [] toViewIDs = new int[] {R.id.idtextView,R.id.booknametextView, R.id.authortextView};
+        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.book_row, cursor,fromFieldNames,toViewIDs,0);
+        bookSearchList = (ListView)findViewById(R.id.booksearchresultlist);
+        bookSearchList.setAdapter(myCursorAdapter);
+
     }
+
+//    public void showMessage(String title, String Message) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setCancelable(true);
+//        builder.setTitle(title);
+//        builder.setMessage(Message);
+//        builder.show();
+//    }
 
 }

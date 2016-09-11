@@ -13,7 +13,7 @@ public class BookModel {
         return id;
     }
 
-        public void setBookid(String bookName){
+        public void setBookid(String id){
         this.id = id;
     }
 

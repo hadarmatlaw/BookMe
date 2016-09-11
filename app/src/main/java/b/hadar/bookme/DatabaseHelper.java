@@ -29,7 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         //BOOKS_TABLE COLUMNS
         public static final String BOOK_NAME = "bookName";
         public static final String AUTHOR_NAME = "author";
-        public static final String BOOK_ID = "bookId";
+        public static final String BOOKID = "_id";
+
 
 
 
@@ -39,7 +40,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-                db.execSQL( "create table " + "books " + "(bookId INTEGER PRIMARY KEY AUTOINCREMENT,bookName TEXT, author TEXT)");
+                db.execSQL( "create table " + "books " + "(_id INTEGER PRIMARY KEY AUTOINCREMENT,bookName TEXT, author TEXT)");
         }
 
         @Override
@@ -74,11 +75,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 SQLiteDatabase db = this.getReadableDatabase();
                 BookModel book = new BookModel();
 
-                Cursor cursor = db.rawQuery( "select * from books where bookId="+ Id + "", null );
+                Cursor cursor = db.rawQuery( "select * from books where _id="+ Id + "", null );
 
                 if (cursor.moveToFirst()) {
                         do {
-                                book.setBookid(cursor.getString(cursor.getColumnIndex("bookId")));
+                                book.setBookid(cursor.getString(cursor.getColumnIndex("_id")));
                                 book.setBookName(cursor.getString(cursor.getColumnIndex("bookName")));
                                 book.setAuthor(cursor.getString(cursor.getColumnIndex("author")));;
 
@@ -89,21 +90,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return book;
         }
 
+        public Cursor getRowByID(String Id) {
+                SQLiteDatabase db = this.getReadableDatabase();
+                Cursor cursor = db.rawQuery("select * from books where _id=" + Id + "", null);
 
+                if (cursor.moveToFirst()) {
+                        do {
+//                                book.setBookid(cursor.getString(cursor.getColumnIndex("bookId")));
+//                                book.setBookName(cursor.getString(cursor.getColumnIndex("bookName")));
+//                                book.setAuthor(cursor.getString(cursor.getColumnIndex("author")));;
+
+
+                        } while (cursor.moveToNext());
+                }
+
+                return cursor;
+        }
+
+        public Cursor getRowByName(String name) {
+                SQLiteDatabase db = this.getReadableDatabase();
+                Cursor cursor = db.rawQuery("select * from books where bookName = " + name + "", null);
+
+                if (cursor.moveToFirst()) {
+                        do {
+//                                book.setBookid(cursor.getString(cursor.getColumnIndex("bookId")));
+//                                book.setBookName(cursor.getString(cursor.getColumnIndex("bookName")));
+//                                book.setAuthor(cursor.getString(cursor.getColumnIndex("author")));;
+
+
+                        } while (cursor.moveToNext());
+                }
+
+                return cursor;
+        }
 
         public Boolean updateBookTable (String id, BookModel book){
                 SQLiteDatabase db = this.getWritableDatabase();
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(BOOK_ID,id);
+                contentValues.put(BOOKID,id);
                 contentValues.put(BOOK_NAME, book.getBookName());
                 contentValues.put(AUTHOR_NAME, book.getAuthor());
-                db.update("books ", contentValues, "bookId = ? ", new String[]{ id });
+                db.update("books ", contentValues, "_id = ? ", new String[]{ id });
                 return true;
         }
 
         public Integer deleteDataFromBooksTable (String id) {
                 SQLiteDatabase db = this.getWritableDatabase();
-                return db.delete("books ", "bookId = ? ", new String[] {id});
+                return db.delete("books ", "_id = ? ", new String[] {id});
 
         }
 

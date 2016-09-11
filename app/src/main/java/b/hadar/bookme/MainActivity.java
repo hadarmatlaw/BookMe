@@ -1,6 +1,7 @@
 package b.hadar.bookme;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,9 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 public class MainActivity extends Activity {
@@ -33,6 +36,10 @@ public class MainActivity extends Activity {
     EditText idBook;
     Button btnDelete;
     Button bookQuery;
+    Button searchBookbtn;
+    ListView mListView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +55,25 @@ public class MainActivity extends Activity {
         idBook = (EditText) findViewById(R.id.ideditText);
         btnDelete = (Button) findViewById(R.id.btnDelete);
         bookQuery = (Button) findViewById(R.id.bookbyidbutton);
+        searchBookbtn = (Button) findViewById(R.id.SearchBookbtn);
+
+        searchBookbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),SearchBook.class);
+                startActivity(intent);
+            }
+        });
+
 
         AddData();
         viewAll();
         UpdateData();
         DeleteData();
         ViewById();
+
     }
+
 
     public void AddData() {
         addDatabtn.setOnClickListener(
@@ -82,26 +101,7 @@ public class MainActivity extends Activity {
                     @Override
                     public void onClick(View v) {
 
-                        BookModel book = mydb.getBookByID(idBook.getText().toString());
-
-                        Toast.makeText(MainActivity.this,"Book Id: " + book.getBookid() ,Toast.LENGTH_LONG).show();
-                        Toast.makeText(MainActivity.this,"Book name: " + book.getBookName() ,Toast.LENGTH_LONG).show();
-                        Toast.makeText(MainActivity.this,"Book author: " + book.getAuthor() ,Toast.LENGTH_LONG).show();
-//                        if (book == null) {
-//                            // show message
-//                            showMessage("Error", "Nothing found");
-//                            return;
-//                        }
-//
-//                        StringBuffer buffer = new StringBuffer();
-//                        buffer.append("bookId :" + book.getBookid().toString() + "\n");
-//                        buffer.append("bookName :" + book.getBookName().toString() + "\n");
-//                        buffer.append("author :" + book.getAuthor().toString() + "\n");
-//
-//
-//                        // Show all data
-//                        showMessage("Data", buffer.toString());
-
+                        populateListViewByID();
                     }
                 }
 
@@ -115,35 +115,13 @@ public class MainActivity extends Activity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Cursor res = mydb.getAllDataFromBooksTable();
+                        populateListView();
 
-                        if (res.getCount() == 0) {
-                            // show message
-                            showMessage("Error", "Nothing found");
-                            return;
-                        }
-
-                        StringBuffer buffer1 = new StringBuffer();
-                        while (res.moveToNext()) {
-                            buffer1.append("bookId :" + res.getString(0) + "\n");
-                            buffer1.append("bookName :" + res.getString(1) + "\n");
-                            buffer1.append("author :" + res.getString(2) + "\n");
-                        }
-
-                        // Show all data
-                        showMessage("Data", buffer1.toString());
                     }
                 }
-        );
+       );
     }
 
-    public void showMessage(String title, String Message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(Message);
-        builder.show();
-    }
 
 
     public void UpdateData() {
@@ -180,8 +158,28 @@ public class MainActivity extends Activity {
                 }
         );
     }
+    private void populateListView(){
+        Cursor cursor = mydb.getAllDataFromBooksTable();
+        String[] fromFieldNames = new String [] {DatabaseHelper.BOOKID,DatabaseHelper.BOOK_NAME,DatabaseHelper.AUTHOR_NAME};
+        int [] toViewIDs = new int[] {R.id.idtextView,R.id.booknametextView, R.id.authortextView};
+        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.book_row, cursor,fromFieldNames,toViewIDs,0);
+        mListView = (ListView)findViewById(R.id.booksearchresultlistView1);
+        mListView.setAdapter(myCursorAdapter);
+
+    }
+
+    private void populateListViewByID(){
+        Cursor cursor = mydb.getRowByID(idBook.getText().toString() );
+        String[] fromFieldNames = new String [] {DatabaseHelper.BOOKID,DatabaseHelper.BOOK_NAME,DatabaseHelper.AUTHOR_NAME};
+        int [] toViewIDs = new int[] {R.id.idtextView,R.id.booknametextView, R.id.authortextView};
+        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.book_row, cursor,fromFieldNames,toViewIDs,0);
+        mListView = (ListView)findViewById(R.id.booksearchresultlistView1);
+        mListView.setAdapter(myCursorAdapter);
+
+    }
 
 }
+
 
 
 

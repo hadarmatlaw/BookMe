@@ -28,7 +28,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/booksearchresultlistView"
+        android:id="@+id/booksearchresultlist"
         android:layout_below="@+id/searchbtn"
         android:layout_alignRight="@+id/booksearcheditText"
         android:layout_alignEnd="@+id/booksearcheditText"
@@ -41,7 +41,7 @@
         android:text="Add to library"
         android:id="@+id/addToLibrarybtn"
         android:layout_marginTop="49dp"
-        android:layout_alignTop="@+id/booksearchresultlistView"
+        android:layout_alignTop="@+id/booksearchresultlist"
         android:layout_alignLeft="@+id/searchbtn"
         android:layout_alignStart="@+id/searchbtn" />
 
@@ -50,7 +50,8 @@
         android:layout_height="wrap_content"
         android:text="Finish"
         android:id="@+id/finishbtn"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/addToLibrarybtn"
         android:layout_alignLeft="@+id/addToLibrarybtn"
-        android:layout_alignStart="@+id/addToLibrarybtn" />
+        android:layout_alignStart="@+id/addToLibrarybtn"
+        android:layout_marginTop="46dp" />
 </RelativeLayout>
