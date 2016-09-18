@@ -30,6 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         public static final String BOOK_NAME = "bookName";
         public static final String AUTHOR_NAME = "author";
         public static final String BOOKID = "_id";
+        public static final String LIBRARY_FLAG = "flag";
 
 
 
@@ -40,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-                db.execSQL( "create table " + "books " + "(_id INTEGER PRIMARY KEY AUTOINCREMENT,bookName TEXT, author TEXT)");
+                db.execSQL( "create table " + "books " + "(_id INTEGER PRIMARY KEY AUTOINCREMENT,bookName TEXT, author TEXT, flag TEXT)");
         }
 
         @Override
@@ -109,19 +110,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         public Cursor getRowByName(String name) {
                 SQLiteDatabase db = this.getReadableDatabase();
-                Cursor cursor = db.rawQuery("select * from books where bookName = " + name + "", null);
-
-                if (cursor.moveToFirst()) {
-                        do {
-//                                book.setBookid(cursor.getString(cursor.getColumnIndex("bookId")));
-//                                book.setBookName(cursor.getString(cursor.getColumnIndex("bookName")));
-//                                book.setAuthor(cursor.getString(cursor.getColumnIndex("author")));;
-
-
-                        } while (cursor.moveToNext());
-                }
+                Cursor cursor = db.rawQuery("select * from books where bookName like " + "'%" + name + "%'" + "", null);
 
                 return cursor;
+        }
+
+
+
+        public Cursor getIDByName(String name) {
+                SQLiteDatabase db = this.getReadableDatabase();
+                Cursor cursor = db.rawQuery("select _id from books where bookName like " + "'%" + name + "%'" + "", null);
+                return cursor;
+        }
+
+        public Boolean addToLibrary (String id){
+                SQLiteDatabase db = this.getWritableDatabase();
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(LIBRARY_FLAG, "X");
+                db.update("books ", contentValues, "_id = ? ", new String[]{ id });
+                return true;
         }
 
         public Boolean updateBookTable (String id, BookModel book){

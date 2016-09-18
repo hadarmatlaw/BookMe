@@ -2,6 +2,7 @@ package b.hadar.bookme;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -40,7 +42,16 @@ public class SearchBook extends Activity {
         addtolibrarybtn = (Button) findViewById(R.id.addToLibrarybtn);
         finishbtn = (Button) findViewById(R.id.finishbtn);
 
+        finishbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
         SearchBook();
+        AddToLibrary();
 
     }
 
@@ -50,24 +61,6 @@ public class SearchBook extends Activity {
                     @Override
                     public void onClick(View v) {
                         SearchBookResult();
-                        //String sbook = bookNameSearch.getText().toString();
-//                        String booktablename;
-//                        String searchedBookId;
-//                        ArrayList<String> searchedBooks = new ArrayList<String>();
-//
-//                        while (res.moveToNext()) {
-//                            booktablename = res.getString(1);
-//
-//                            if (booktablename == sbook) {
-//                                searchedBookId = res.getString(0);
-//                                searchedBooks.add(searchedBookId);
-//                            }
-//
-//                        }
-
-
-
-
 
 
                     }
@@ -76,9 +69,27 @@ public class SearchBook extends Activity {
 
     }
 
+    public void AddToLibrary () {
+        addtolibrarybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mydb.getIDByName(bookNameSearch.getText().toString());
+                String id = new String(DatabaseHelper.BOOKID);
+
+                boolean isFlagUpdate = mydb.addToLibrary(id);
+                if (isFlagUpdate == true)
+                    Toast.makeText(SearchBook.this, "Data Update", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(SearchBook.this, "Data not Update" + id, Toast.LENGTH_LONG).show();
+
+            }
+
+        });
+    }
+
     private void SearchBookResult(){
         Cursor cursor = mydb.getRowByName(bookNameSearch.getText().toString() );
-        String[] fromFieldNames = new String [] {DatabaseHelper.BOOKID,DatabaseHelper.BOOK_NAME,DatabaseHelper.AUTHOR_NAME};
+        String[] fromFieldNames = new String [] {DatabaseHelper.BOOKID,DatabaseHelper.BOOK_NAME,DatabaseHelper.LIBRARY_FLAG};
         int [] toViewIDs = new int[] {R.id.idtextView,R.id.booknametextView, R.id.authortextView};
         SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(getBaseContext(),R.layout.book_row, cursor,fromFieldNames,toViewIDs,0);
         bookSearchList = (ListView)findViewById(R.id.booksearchresultlist);
