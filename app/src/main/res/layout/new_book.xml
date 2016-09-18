@@ -131,5 +131,15 @@
         android:layout_alignLeft="@+id/bookbyidbutton"
         android:layout_alignStart="@+id/bookbyidbutton" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="person"
+        android:id="@+id/personbtn"
+        android:layout_above="@+id/addbtn"
+        android:layout_alignLeft="@+id/addbtn"
+        android:layout_alignStart="@+id/addbtn" />
+
 
 </RelativeLayout>

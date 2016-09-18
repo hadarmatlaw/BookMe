@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/linearLayout2">
+
+    </LinearLayout>
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/profilPicImg"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name"
+        android:id="@+id/firstNameTV"
+        android:layout_below="@+id/profilPicImg"
+        android:layout_toLeftOf="@+id/profilPicImg"
+        android:layout_toStartOf="@+id/profilPicImg"
+        android:layout_marginTop="21dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/space"
+        android:layout_below="@+id/NameET"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Name"
+        android:id="@+id/LastNameTV"
+        android:layout_alignTop="@+id/space"
+        android:layout_toLeftOf="@+id/NameET"
+        android:layout_toStartOf="@+id/NameET" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:id="@+id/UserNameTV"
+        android:layout_below="@+id/space"
+        android:layout_alignRight="@+id/LastNameTV"
+        android:layout_alignEnd="@+id/LastNameTV" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/NameET"
+        android:layout_below="@+id/profilPicImg"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/LastNameET"
+        android:layout_above="@+id/UserNameTV"
+        android:layout_toRightOf="@+id/UserNameTV"
+        android:layout_toEndOf="@+id/UserNameTV" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserNameET"
+        android:layout_alignBottom="@+id/UserNameTV"
+        android:layout_toRightOf="@+id/LastNameTV"
+        android:layout_toEndOf="@+id/LastNameTV"
+        android:layout_below="@+id/NameET"
+        android:text="`" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:id="@+id/PasswordTV"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/UserNameTV"
+        android:layout_alignLeft="@+id/firstNameTV"
+        android:layout_alignStart="@+id/firstNameTV" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Password"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/PasswordTV"
+        android:layout_alignLeft="@+id/firstNameTV" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:id="@+id/EmailTV"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/firstNameTV" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/EmailET"
+        android:layout_alignBaseline="@+id/EmailTV"
+        android:layout_alignBottom="@+id/EmailTV"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/ConfirmPasswordET"
+        android:layout_alignTop="@+id/PasswordTV"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/PasswordET"
+        android:layout_above="@+id/textView2"
+        android:layout_alignRight="@+id/profilPicImg"
+        android:layout_alignEnd="@+id/profilPicImg" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:id="@+id/AddressTV"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/EmailET"
+        android:layout_alignLeft="@+id/UserNameTV"
+        android:layout_alignStart="@+id/UserNameTV" />
+
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddressET"
+        android:layout_alignBottom="@+id/AddressTV"
+        android:layout_toRightOf="@+id/AddressTV"
+        android:layout_toEndOf="@+id/AddressTV" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Male"
+        android:id="@+id/MaleradioButton"
+        android:layout_below="@+id/AddressTV"
+        android:layout_alignLeft="@+id/AddressTV"
+        android:layout_alignStart="@+id/AddressTV"
+        android:checked="false" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Female"
+        android:id="@+id/FemaleradioButton"
+        android:checked="false"
+        android:layout_below="@+id/AddressET"
+        android:layout_alignLeft="@+id/PasswordET"
+        android:layout_alignStart="@+id/PasswordET" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sing Up"
+        android:id="@+id/SingUpbtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/EmailTV"
+        android:layout_alignStart="@+id/EmailTV"
+        android:layout_marginBottom="39dp" />
+
+
+</RelativeLayout>

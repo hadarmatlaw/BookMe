@@ -37,6 +37,7 @@ public class MainActivity extends Activity {
     Button btnDelete;
     Button bookQuery;
     Button searchBookbtn;
+    Button addPeople;
     ListView mListView;
 
 
@@ -56,11 +57,20 @@ public class MainActivity extends Activity {
         btnDelete = (Button) findViewById(R.id.btnDelete);
         bookQuery = (Button) findViewById(R.id.bookbyidbutton);
         searchBookbtn = (Button) findViewById(R.id.SearchBookbtn);
+        addPeople = (Button) findViewById(R.id.personbtn);
 
         searchBookbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),SearchBook.class);
+                startActivity(intent);
+            }
+        });
+
+        addPeople.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),SingUp.class);
                 startActivity(intent);
             }
         });
